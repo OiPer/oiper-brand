@@ -1,3 +1,6 @@
-export * from './animated-logo'
+export * from './animations/draw'
+export * from './animations/shine'
+export * from './animations/trace'
+export * from './animations/wipe'
 export * from './logo'
 export * from './text'

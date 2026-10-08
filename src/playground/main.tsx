@@ -1,15 +1,10 @@
 import { createRoot } from 'react-dom/client'
-import {
-  OiPerLogo,
-  OiPerLogoBackground,
-  OiPerLogoCompact,
-  OiPerLogoDraw,
-  OiPerLogoShine,
-  OiPerLogoText,
-  OiPerLogoTrace,
-  OiPerLogoWipe,
-  OiPerText,
-} from '..'
+import { OiPerLogoDraw } from '../animations/draw'
+import { OiPerLogoShine } from '../animations/shine'
+import { OiPerLogoTrace } from '../animations/trace'
+import { OiPerLogoWipe } from '../animations/wipe'
+import { OiPerLogo, OiPerLogoBackground, OiPerLogoCompact } from '../logo'
+import { OiPerLogoText, OiPerText } from '../text'
 
 const ICON_SIZES = [16, 32, 64, 128]
 const WORDMARK_HEIGHTS = [24, 48, 72]
@@ -33,7 +28,7 @@ const ANIMATED = [
   { name: 'OiPerLogoTrace', Logo: OiPerLogoTrace },
 ]
 
-function IconsHead() {
+function IconsHead({ continuous }: { continuous?: boolean }) {
   return (
     <div className="head">
       <span>Component</span>
@@ -41,6 +36,7 @@ function IconsHead() {
         <span key={size}>{size}px</span>
       ))}
       <span>Brand color</span>
+      {continuous && <span>Continuous</span>}
     </div>
   )
 }
@@ -97,8 +93,8 @@ function App() {
 
       <section>
         <h2>Animated</h2>
-        <div className="grid icons">
-          <IconsHead />
+        <div className="grid animated">
+          <IconsHead continuous />
           {ANIMATED.map((icon) => (
             <div key={icon.name}>
               <code>{icon.name}</code>
@@ -109,6 +105,9 @@ function App() {
               ))}
               <span>
                 <icon.Logo brandColor={BRAND_COLOR} style={{ fontSize: 64 }} />
+              </span>
+              <span>
+                <icon.Logo continuous style={{ fontSize: 64 }} />
               </span>
             </div>
           ))}
