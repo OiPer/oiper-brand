@@ -4,4 +4,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   root: './src/playground',
   plugins: [react()],
+  build: {
+    outDir: '../../dist-playground',
+    emptyOutDir: true,
+  },
 })

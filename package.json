@@ -14,7 +14,8 @@
     "typecheck:watch": "tsc --noEmit --watch",
     "build": "tsdown --config ./tsdown.config.ts",
     "build:watch": "concurrently --names \"R,T\" --prefix-colors \"blue.dim,magenta.dim\" \"tsdown --config ./tsdown.config.ts --watch\" \"tsc --noEmit --watch\"",
-    "dev": "vite --host --port 3000"
+    "dev": "vite --host --port 3000",
+    "build:playground": "vite build"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
