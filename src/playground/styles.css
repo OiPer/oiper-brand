@@ -1,0 +1,111 @@
+:root {
+  --bg: #0f1012;
+  --surface: #16171a;
+  --border: #25272b;
+  --text: #e8eaed;
+  --text-dim: #8b9099;
+  --font-text:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-display:
+    ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 1rem/1.6 var(--font-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+}
+
+h1 {
+  font: 600 2.5rem/1.1 var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin-top: 1rem;
+  color: var(--text-dim);
+  font-size: 1.125rem;
+}
+
+section {
+  margin-top: 4rem;
+}
+
+h2 {
+  font: 600 1.625rem/1.2 var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.section-note {
+  margin-top: 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+}
+
+.grid {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: 15rem repeat(var(--columns), minmax(0, 1fr));
+  align-items: center;
+}
+
+.grid-row + .grid-row {
+  border-top: 1px solid var(--border);
+}
+
+.grid-head {
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.grid-head > div {
+  padding: 0.625rem 1rem;
+}
+
+.grid-head > div + div {
+  text-align: center;
+}
+
+.grid-label {
+  padding: 1rem;
+  font: 0.8125rem/1.4 var(--font-mono);
+}
+
+.grid-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--cell-height);
+  padding: 1rem;
+}

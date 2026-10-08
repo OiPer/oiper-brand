@@ -3,16 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OiPer Logo Playground</title>
+    <title>OiPer Logo</title>
+    <style>
+      :root {
+        --bg: #0f1012;
+        --border: #24262a;
+        --text: #e8eaed;
+        --text-dim: #8a9099;
+        --font-text: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        --font-display: ui-serif, 'Iowan Old Style', Palatino, Georgia, serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 1rem/1.6 var(--font-text);
+      }
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+      .page {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 4.5rem 1.5rem;
+      }
+      h1 {
+        font: 600 2.5rem/1.1 var(--font-display);
+        letter-spacing: -0.02em;
+      }
+      .lede {
+        margin-top: 1rem;
+        color: var(--text-dim);
+        font-size: 1.125rem;
+      }
+      section {
+        margin-top: 4.5rem;
+      }
+      h2 {
+        font: 600 1.625rem/1.2 var(--font-display);
+        letter-spacing: -0.01em;
+      }
+      .grid {
+        display: grid;
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--border);
+      }
+      .grid > div {
+        display: contents;
+      }
+      .grid > div > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.25rem 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .grid > div > :first-child {
+        justify-content: flex-start;
+        padding-left: 0;
+      }
+      .grid .head > * {
+        padding-block: 0.75rem;
+        color: var(--text-dim);
+        font-size: 0.8125rem;
+      }
+      .icons {
+        grid-template-columns: 15rem repeat(5, minmax(0, 1fr));
+      }
+      .wordmarks {
+        grid-template-columns: 15rem repeat(3, minmax(0, 1fr));
+      }
+      code {
+        font: 0.875rem var(--font-mono);
+      }
+    </style>
   </head>
-  <body
-    style="
-      margin: 0;
-      background: #141414;
-      color: white;
-      font-family: system-ui, sans-serif;
-    "
-  >
+  <body>
     <div id="root"></div>
     <script type="module" src="./main.tsx"></script>
   </body>

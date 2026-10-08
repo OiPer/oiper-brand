@@ -1,78 +1,120 @@
-import { ReactNode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
-  OiPerAnimatedLogo,
   OiPerLogo,
   OiPerLogoBackground,
   OiPerLogoCompact,
+  OiPerLogoDraw,
+  OiPerLogoShine,
   OiPerLogoText,
+  OiPerLogoTrace,
+  OiPerLogoWipe,
   OiPerText,
 } from '..'
 
-const VARIANTS = ['draw', 'shine', 'wipe', 'trace'] as const
-const SIZES = [16, 48, 128]
+const ICON_SIZES = [16, 32, 64, 128]
+const WORDMARK_HEIGHTS = [24, 48, 72]
+const BRAND_COLOR = '#f5c451'
 
-function Item({ label, children }: { label: string; children: ReactNode }) {
+const ICONS = [
+  { name: 'OiPerLogo', Logo: OiPerLogo },
+  { name: 'OiPerLogoCompact', Logo: OiPerLogoCompact },
+  { name: 'OiPerLogoBackground', Logo: OiPerLogoBackground },
+]
+
+const WORDMARKS = [
+  { name: 'OiPerText', Logo: OiPerText },
+  { name: 'OiPerLogoText', Logo: OiPerLogoText },
+]
+
+const ANIMATED = [
+  { name: 'OiPerLogoDraw', Logo: OiPerLogoDraw },
+  { name: 'OiPerLogoShine', Logo: OiPerLogoShine },
+  { name: 'OiPerLogoWipe', Logo: OiPerLogoWipe },
+  { name: 'OiPerLogoTrace', Logo: OiPerLogoTrace },
+]
+
+function IconsHead() {
   return (
-    <section style={{ marginTop: 32 }}>
-      <h2 style={{ fontSize: 14, fontWeight: 500, opacity: 0.6 }}>{label}</h2>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-        {children}
-      </div>
-    </section>
+    <div className="head">
+      <span>Component</span>
+      {ICON_SIZES.map((size) => (
+        <span key={size}>{size}px</span>
+      ))}
+      <span>Brand color</span>
+    </div>
   )
 }
 
 function App() {
-  const [replay, setReplay] = useState(0)
-
   return (
-    <main style={{ padding: 32 }}>
-      <h1 style={{ fontSize: 18 }}>Logos</h1>
+    <div className="page">
+      <header>
+        <h1>OiPer Logo</h1>
+        <p className="lede">All logo components at different sizes.</p>
+      </header>
 
-      <Item label="OiPerLogo">
-        {SIZES.map((size) => (
-          <OiPerLogo key={size} style={{ fontSize: size }} />
-        ))}
-      </Item>
-      <Item label="OiPerLogoCompact">
-        {SIZES.map((size) => (
-          <OiPerLogoCompact key={size} style={{ fontSize: size }} />
-        ))}
-      </Item>
-      <Item label="OiPerLogoBackground">
-        {SIZES.map((size) => (
-          <OiPerLogoBackground key={size} style={{ fontSize: size }} />
-        ))}
-      </Item>
-      <Item label="OiPerText">
-        <OiPerText style={{ width: 'auto', height: 48 }} />
-      </Item>
-      <Item label="OiPerLogoText">
-        <OiPerLogoText style={{ width: 'auto', height: 48 }} />
-      </Item>
-
-      <h1 style={{ marginTop: 48, fontSize: 18 }}>Animated logos</h1>
-      <button onClick={() => setReplay((value) => value + 1)}>Replay</button>
-
-      {VARIANTS.map((variant) => (
-        <Item key={variant} label={`OiPerAnimatedLogo variant="${variant}"`}>
-          {SIZES.map((size) => (
-            <OiPerAnimatedLogo
-              key={`${replay}-${size}`}
-              variant={variant}
-              style={{ fontSize: size }}
-            />
+      <section>
+        <h2>Icons</h2>
+        <div className="grid icons">
+          <IconsHead />
+          {ICONS.map((icon) => (
+            <div key={icon.name}>
+              <code>{icon.name}</code>
+              {ICON_SIZES.map((size) => (
+                <span key={size}>
+                  <icon.Logo style={{ fontSize: size }} />
+                </span>
+              ))}
+              <span>
+                <icon.Logo brandColor={BRAND_COLOR} style={{ fontSize: 64 }} />
+              </span>
+            </div>
           ))}
-          <OiPerAnimatedLogo
-            key={`${replay}-brand`}
-            variant={variant}
-            brandColor="#f5c451"
-            style={{ fontSize: 128 }}
-          />
-        </Item>
-      ))}
-    </main>
+        </div>
+      </section>
+
+      <section>
+        <h2>Wordmarks</h2>
+        <div className="grid wordmarks">
+          <div className="head">
+            <span>Component</span>
+            {WORDMARK_HEIGHTS.map((height) => (
+              <span key={height}>{height}px</span>
+            ))}
+          </div>
+          {WORDMARKS.map((wordmark) => (
+            <div key={wordmark.name}>
+              <code>{wordmark.name}</code>
+              {WORDMARK_HEIGHTS.map((height) => (
+                <span key={height}>
+                  <wordmark.Logo style={{ width: 'auto', height }} />
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2>Animated</h2>
+        <div className="grid icons">
+          <IconsHead />
+          {ANIMATED.map((icon) => (
+            <div key={icon.name}>
+              <code>{icon.name}</code>
+              {ICON_SIZES.map((size) => (
+                <span key={size}>
+                  <icon.Logo style={{ fontSize: size }} />
+                </span>
+              ))}
+              <span>
+                <icon.Logo brandColor={BRAND_COLOR} style={{ fontSize: 64 }} />
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   )
 }
 
