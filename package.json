@@ -15,7 +15,8 @@
     "build": "tsdown --config ./tsdown.config.ts",
     "build:watch": "concurrently --names \"R,T\" --prefix-colors \"blue.dim,magenta.dim\" \"tsdown --config ./tsdown.config.ts --watch\" \"tsc --noEmit --watch\"",
     "dev": "vite --host --port 3000",
-    "build:playground": "vite build"
+    "build:playground": "pnpm logos && vite build",
+    "logos": "tsx ./src/scripts/write-logos.tsx"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -54,6 +55,8 @@
     "prettier-plugin-organize-imports": "^4.3.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "sharp": "^0.35.5",
+    "sharp-ico": "^0.1.5",
     "tsdown": "^0.22.3",
     "tslib": "^2.8.1",
     "tsx": "^4.22.4",
