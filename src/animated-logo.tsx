@@ -20,14 +20,14 @@ const DRAW_STYLES = `
     stroke-dashoffset: 1;
     animation:
       oiper-logo-draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards,
-      oiper-logo-draw-stroke-out 0.4s ease-out 1.5s forwards;
+      oiper-logo-draw-stroke-out 0.4s ease-out 1.7s forwards;
   }
   .oiper-logo-draw-stroke-inner {
-    animation-delay: 0.25s, 1.5s;
+    animation-delay: 0.25s, 1.7s;
   }
   .oiper-logo-draw-fill {
     opacity: 0;
-    animation: oiper-logo-draw-fill-in 0.5s ease-out 1.1s forwards;
+    animation: oiper-logo-draw-fill-in 0.5s ease-out 1.35s forwards;
   }
 `
 
