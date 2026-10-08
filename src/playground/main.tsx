@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { OiPerLogoDraw } from '../animations/draw'
+import { OiPerLogoPremium } from '../animations/premium'
 import { OiPerLogoShine } from '../animations/shine'
 import { OiPerLogoTrace } from '../animations/trace'
 import { OiPerLogoWipe } from '../animations/wipe'
@@ -111,6 +112,18 @@ function App() {
               </span>
             </div>
           ))}
+          <div>
+            <code>OiPerLogoPremium</code>
+            {ICON_SIZES.map((size) => (
+              <span key={size}>
+                <OiPerLogoPremium style={{ fontSize: size }} />
+              </span>
+            ))}
+            <span />
+            <span>
+              <OiPerLogoPremium continuous style={{ fontSize: 64 }} />
+            </span>
+          </div>
         </div>
       </section>
     </div>
