@@ -23,7 +23,7 @@ export function OiPerLogo({
   )
 }
 
-export function OiPerLogoTray({
+export function OiPerLogoCompact({
   brandColor,
   ...props
 }: ComponentProps<'svg'> & { brandColor?: string }) {
