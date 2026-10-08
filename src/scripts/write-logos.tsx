@@ -1,3 +1,4 @@
+import { zipSync } from 'fflate'
 import fs from 'fs'
 import path from 'path'
 import { ReactElement } from 'react'
@@ -81,13 +82,13 @@ void (async () => {
     await writeLogo(
       path.join(PUBLIC_DIR, 'logo'),
       name,
-      <OiPerLogo brandColor={fillColor} />,
+      <OiPerLogo brandColor={fillColor} width={512} height={512} />,
       iconResizes
     )
     await writeLogo(
       path.join(PUBLIC_DIR, 'logo-compact'),
       name,
-      <OiPerLogoCompact brandColor={fillColor} />,
+      <OiPerLogoCompact brandColor={fillColor} width={512} height={512} />,
       iconResizes
     )
     await writeLogo(
@@ -107,17 +108,38 @@ void (async () => {
   await writeLogo(
     path.join(PUBLIC_DIR, 'logo-background'),
     'dark',
-    <OiPerLogoBackground backgroundColor="#282828" brandColor="#FFFFFF" />,
+    <OiPerLogoBackground
+      backgroundColor="#282828"
+      brandColor="#FFFFFF"
+      width={512}
+      height={512}
+    />,
     iconResizes
   )
   await writeLogo(
     path.join(PUBLIC_DIR, 'logo-background'),
     'light',
-    <OiPerLogoBackground backgroundColor="#FFFFFF" brandColor="#000000" />,
+    <OiPerLogoBackground
+      backgroundColor="#FFFFFF"
+      brandColor="#000000"
+      width={512}
+      height={512}
+    />,
     iconResizes
   )
 
   await writeFavicon('favicon.ico', '#FFFFFF')
   await writeFavicon('favicon-white.ico', '#FFFFFF')
   await writeFavicon('favicon-black.ico', '#000000')
+
+  const brandKit: Record<string, Uint8Array> = {}
+  for (const entry of fs.readdirSync(PUBLIC_DIR, { recursive: true })) {
+    const filePath = path.join(PUBLIC_DIR, entry.toString())
+    if (!/\.(svg|png|ico)$/.test(filePath)) continue
+    brandKit[`oiper-brand-kit/${entry.toString()}`] = fs.readFileSync(filePath)
+  }
+  fs.writeFileSync(
+    path.join(PUBLIC_DIR, 'oiper-brand-kit.zip'),
+    zipSync(brandKit, { level: 9 })
+  )
 })()

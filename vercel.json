@@ -24,7 +24,7 @@
       ]
     },
     {
-      "source": "/(favicon.*\\.ico)",
+      "source": "/(favicon.*\\.ico|oiper-brand-kit\\.zip)",
       "headers": [
         {
           "key": "Cache-Control",
