@@ -7,6 +7,7 @@
     <style>
       :root {
         --bg: #0f1012;
+        --surface: #17191c;
         --border: #24262a;
         --text: #e8eaed;
         --text-dim: #8a9099;
@@ -50,7 +51,9 @@
       .grid {
         display: grid;
         margin-top: 1.5rem;
-        border-top: 1px solid var(--border);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 6px;
       }
       .grid > div {
         display: contents;
@@ -59,26 +62,32 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 1.25rem 0.75rem;
+        padding: 2rem 0.75rem;
         border-bottom: 1px solid var(--border);
       }
       .grid > div > :first-child {
         justify-content: flex-start;
-        padding-left: 0;
+        padding-left: 1rem;
+      }
+      .grid > div:last-child > * {
+        border-bottom: 0;
       }
       .grid .head > * {
         padding-block: 0.75rem;
+        background: var(--surface);
         color: var(--text-dim);
         font-size: 0.8125rem;
+        font-weight: 650;
+        white-space: nowrap;
       }
       .icons {
-        grid-template-columns: 15rem repeat(5, minmax(0, 1fr));
+        grid-template-columns: max-content repeat(5, auto);
       }
       .animated {
-        grid-template-columns: 15rem repeat(6, minmax(0, 1fr));
+        grid-template-columns: max-content repeat(6, auto);
       }
       .wordmarks {
-        grid-template-columns: 15rem repeat(3, minmax(0, 1fr));
+        grid-template-columns: max-content repeat(3, auto);
       }
       code {
         font: 0.875rem var(--font-mono);

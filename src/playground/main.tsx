@@ -1,6 +1,8 @@
+import { ComponentProps, ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { OiPerLogoDraw } from '../animations/draw'
-import { OiPerLogoPremium } from '../animations/premium'
+import { OiPerLogoMax } from '../animations/max'
+import { OiPerLogoPro } from '../animations/pro'
 import { OiPerLogoShine } from '../animations/shine'
 import { OiPerLogoTrace } from '../animations/trace'
 import { OiPerLogoWipe } from '../animations/wipe'
@@ -22,11 +24,19 @@ const WORDMARKS = [
   { name: 'OiPerLogoText', Logo: OiPerLogoText },
 ]
 
-const ANIMATED = [
-  { name: 'OiPerLogoDraw', Logo: OiPerLogoDraw },
-  { name: 'OiPerLogoShine', Logo: OiPerLogoShine },
-  { name: 'OiPerLogoWipe', Logo: OiPerLogoWipe },
-  { name: 'OiPerLogoTrace', Logo: OiPerLogoTrace },
+const ANIMATED: Array<{
+  name: string
+  Logo: (
+    props: ComponentProps<'svg'> & { brandColor?: string; continuous?: boolean }
+  ) => ReactNode
+  hasBrandColor: boolean
+}> = [
+  { name: 'OiPerLogoDraw', Logo: OiPerLogoDraw, hasBrandColor: true },
+  { name: 'OiPerLogoShine', Logo: OiPerLogoShine, hasBrandColor: true },
+  { name: 'OiPerLogoWipe', Logo: OiPerLogoWipe, hasBrandColor: true },
+  { name: 'OiPerLogoTrace', Logo: OiPerLogoTrace, hasBrandColor: true },
+  { name: 'OiPerLogoPro', Logo: OiPerLogoPro, hasBrandColor: false },
+  { name: 'OiPerLogoMax', Logo: OiPerLogoMax, hasBrandColor: false },
 ]
 
 function IconsHead({ continuous }: { continuous?: boolean }) {
@@ -105,25 +115,18 @@ function App() {
                 </span>
               ))}
               <span>
-                <icon.Logo brandColor={BRAND_COLOR} style={{ fontSize: 64 }} />
+                {icon.hasBrandColor && (
+                  <icon.Logo
+                    brandColor={BRAND_COLOR}
+                    style={{ fontSize: 64 }}
+                  />
+                )}
               </span>
               <span>
                 <icon.Logo continuous style={{ fontSize: 64 }} />
               </span>
             </div>
           ))}
-          <div>
-            <code>OiPerLogoPremium</code>
-            {ICON_SIZES.map((size) => (
-              <span key={size}>
-                <OiPerLogoPremium style={{ fontSize: size }} />
-              </span>
-            ))}
-            <span />
-            <span>
-              <OiPerLogoPremium continuous style={{ fontSize: 64 }} />
-            </span>
-          </div>
         </div>
       </section>
     </div>

@@ -1,5 +1,6 @@
 export * from './animations/draw'
-export * from './animations/premium'
+export * from './animations/max'
+export * from './animations/pro'
 export * from './animations/shine'
 export * from './animations/trace'
 export * from './animations/wipe'

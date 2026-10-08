@@ -1,30 +1,30 @@
 import { ComponentProps, useId } from 'react'
 
 const STYLES = `
-  @keyframes oiper-logo-premium-shine {
+  @keyframes oiper-logo-pro-shine {
     0% { transform: translate(-444px, -444px); }
     40%, 100% { transform: translate(444px, 444px); }
   }
-  @keyframes oiper-logo-premium-sparkle {
+  @keyframes oiper-logo-pro-sparkle {
     0%, 14%, 32%, 100% { opacity: 0; }
     20% { opacity: 1; }
   }
-  .oiper-logo-premium-shine {
+  .oiper-logo-pro-shine {
     transform: translate(-444px, -444px);
-    animation: oiper-logo-premium-shine 3.5s ease-in-out forwards;
+    animation: oiper-logo-pro-shine 3.5s ease-in-out forwards;
   }
-  .oiper-logo-premium-sparkle {
+  .oiper-logo-pro-sparkle {
     opacity: 0;
-    animation: oiper-logo-premium-sparkle 3.5s ease-in-out forwards;
+    animation: oiper-logo-pro-sparkle 3.5s ease-in-out forwards;
   }
-  [data-continuous] .oiper-logo-premium-shine,
-  [data-continuous] .oiper-logo-premium-sparkle {
+  [data-continuous] .oiper-logo-pro-shine,
+  [data-continuous] .oiper-logo-pro-sparkle {
     animation-iteration-count: infinite;
     animation-direction: alternate;
   }
 `
 
-export function OiPerLogoPremium({
+export function OiPerLogoPro({
   continuous,
   ...props
 }: ComponentProps<'svg'> & { continuous?: boolean }) {
@@ -72,14 +72,14 @@ export function OiPerLogoPremium({
       />
       <g clipPath={`url(#${id}-clip)`}>
         <rect
-          className="oiper-logo-premium-shine"
+          className="oiper-logo-pro-shine"
           width="444"
           height="444"
           fill={`url(#${id}-shine)`}
         />
       </g>
       <path
-        className="oiper-logo-premium-sparkle"
+        className="oiper-logo-pro-sparkle"
         d="M379 5Q384 60 439 65Q384 70 379 125Q374 70 319 65Q374 60 379 5Z"
         fill="#fffbeb"
       />
