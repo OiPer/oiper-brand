@@ -1,11 +1,12 @@
 import { ComponentProps, ReactNode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import { OiPerLogoDissolve } from '../animations/dissolve'
 import { OiPerLogoDraw } from '../animations/draw'
 import { OiPerLogoMax } from '../animations/max'
 import { OiPerLogoPro } from '../animations/pro'
 import { OiPerLogoShine } from '../animations/shine'
+import { OiPerLogoStripes } from '../animations/stripes'
 import { OiPerLogoTrace } from '../animations/trace'
-import { OiPerLogoWipe } from '../animations/wipe'
 import { OiPerLogo, OiPerLogoBackground, OiPerLogoCompact } from '../logo'
 import { OiPerLogoText, OiPerText } from '../text'
 
@@ -54,8 +55,9 @@ const ANIMATED: Array<{
   { name: 'OiPerLogoPro', Logo: OiPerLogoPro, hasBrandColor: false },
   { name: 'OiPerLogoDraw', Logo: OiPerLogoDraw, hasBrandColor: true },
   { name: 'OiPerLogoShine', Logo: OiPerLogoShine, hasBrandColor: true },
-  { name: 'OiPerLogoWipe', Logo: OiPerLogoWipe, hasBrandColor: true },
   { name: 'OiPerLogoTrace', Logo: OiPerLogoTrace, hasBrandColor: true },
+  { name: 'OiPerLogoDissolve', Logo: OiPerLogoDissolve, hasBrandColor: true },
+  { name: 'OiPerLogoStripes', Logo: OiPerLogoStripes, hasBrandColor: true },
 ]
 
 async function copyFile(url: string, format: (typeof FORMATS)[number]) {
