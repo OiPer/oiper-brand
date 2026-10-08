@@ -31,12 +31,12 @@ const ANIMATED: Array<{
   ) => ReactNode
   hasBrandColor: boolean
 }> = [
+  { name: 'OiPerLogoMax', Logo: OiPerLogoMax, hasBrandColor: false },
+  { name: 'OiPerLogoPro', Logo: OiPerLogoPro, hasBrandColor: false },
   { name: 'OiPerLogoDraw', Logo: OiPerLogoDraw, hasBrandColor: true },
   { name: 'OiPerLogoShine', Logo: OiPerLogoShine, hasBrandColor: true },
   { name: 'OiPerLogoWipe', Logo: OiPerLogoWipe, hasBrandColor: true },
   { name: 'OiPerLogoTrace', Logo: OiPerLogoTrace, hasBrandColor: true },
-  { name: 'OiPerLogoPro', Logo: OiPerLogoPro, hasBrandColor: false },
-  { name: 'OiPerLogoMax', Logo: OiPerLogoMax, hasBrandColor: false },
 ]
 
 function IconsHead({ continuous }: { continuous?: boolean }) {

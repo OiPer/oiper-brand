@@ -13,7 +13,7 @@ const STYLES = `
     20% { opacity: 1; }
   }
   .oiper-logo-max-flow {
-    animation: oiper-logo-max-flow 7s ease-in-out forwards;
+    animation: oiper-logo-max-flow 4s ease-in-out forwards;
   }
   .oiper-logo-max-shine {
     transform: translate(-444px, -444px);
@@ -56,11 +56,21 @@ export function OiPerLogoMax({
       <style>{STYLES}</style>
       <defs>
         <linearGradient id={`${id}-flow`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#c4b5fd" />
-          <stop offset="0.25" stopColor="#f9a8d4" />
-          <stop offset="0.5" stopColor="#fde68a" />
-          <stop offset="0.75" stopColor="#a5f3fc" />
-          <stop offset="1" stopColor="#c4b5fd" />
+          <stop offset="0" stopColor="#7c3aed" />
+          <stop offset="0.14" stopColor="#c084fc" />
+          <stop offset="0.28" stopColor="#f472b6" />
+          <stop offset="0.42" stopColor="#fb923c" />
+          <stop offset="0.56" stopColor="#facc15" />
+          <stop offset="0.7" stopColor="#2dd4bf" />
+          <stop offset="0.84" stopColor="#38bdf8" />
+          <stop offset="1" stopColor="#6366f1" />
+        </linearGradient>
+        <linearGradient id={`${id}-metal`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffffff" stopOpacity="0.45" />
+          <stop offset="0.25" stopColor="#ffffff" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#000000" stopOpacity="0.35" />
+          <stop offset="0.7" stopColor="#ffffff" stopOpacity="0.3" />
+          <stop offset="1" stopColor="#000000" stopOpacity="0.4" />
         </linearGradient>
         <linearGradient id={`${id}-shine`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0.3" stopColor="#ffffff" stopOpacity="0" />
@@ -86,6 +96,7 @@ export function OiPerLogoMax({
           height="888"
           fill={`url(#${id}-flow)`}
         />
+        <rect width="444" height="444" fill={`url(#${id}-metal)`} />
         <rect
           className="oiper-logo-max-shine"
           width="444"
