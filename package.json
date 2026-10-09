@@ -1,9 +1,9 @@
 {
-  "name": "@oiper/logo",
-  "version": "0.0.2",
+  "name": "@oiper/brand",
+  "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OiPer/oiper-logo.git"
+    "url": "git+https://github.com/OiPer/oiper-brand.git"
   },
   "private": false,
   "sideEffects": false,
