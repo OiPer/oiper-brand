@@ -1,0 +1,279 @@
+import { ComponentProps, useEffect, useRef } from 'react'
+
+const RING_PATH =
+  'M444 222C444 163.122 420.611 106.655 378.978 65.0223C337.345 23.3892 280.878 0 222 0C163.122 0 106.655 23.3892 65.0223 65.0223C23.3892 106.655 0 163.122 0 222C0 280.878 23.3892 337.345 65.0223 378.978C106.655 420.611 163.122 444 222 444C280.878 444 337.345 420.611 378.978 378.978C420.611 337.345 444 280.878 444 222ZM298.96 222C298.96 203.342 295.285 184.866 288.145 167.628C281.005 150.39 270.539 134.728 257.346 121.534C244.152 108.341 228.49 97.8754 211.252 90.7352C194.014 83.595 175.538 79.92 156.88 79.92C138.222 79.92 119.746 83.595 102.508 90.7352C85.2704 97.8754 69.6076 108.341 56.4143 121.534C43.2209 134.728 32.7554 150.39 25.6152 167.628C18.475 184.866 14.8 203.342 14.8 222C14.8 240.658 18.475 259.134 25.6152 276.372C32.7554 293.61 43.2209 309.272 56.4143 322.466C69.6076 335.659 85.2704 346.125 102.508 353.265C119.746 360.405 138.222 364.08 156.88 364.08C175.538 364.08 194.014 360.405 211.252 353.265C228.49 346.125 244.152 335.659 257.346 322.466C270.539 309.272 281.005 293.61 288.145 276.372C295.285 259.134 298.96 240.658 298.96 222Z'
+
+const LETTER_PATHS = [
+  'M679.419 398.818C654.815 398.818 633.25 393.463 614.724 382.754C596.488 371.755 582.304 356.27 572.173 336.298C562.042 316.037 556.976 292.592 556.976 265.964C556.976 227.468 564.502 193.603 579.554 164.369C594.606 135.136 614.724 112.704 639.907 97.074C665.091 81.1547 692.59 73.195 722.405 73.195C736.878 73.195 747.588 75.3658 754.535 79.7075C761.482 83.7596 764.956 90.2721 764.956 99.2448C764.956 102.429 764.666 105.323 764.087 107.928C763.508 110.244 762.64 112.849 761.482 115.743C757.719 114.875 753.377 114.151 748.456 113.572C743.535 112.704 739.338 112.27 735.865 112.27C712.997 112.27 692.156 118.637 673.341 131.373C654.815 144.108 640.052 162.054 629.053 185.209C618.342 208.075 612.987 234.414 612.987 264.227C612.987 298.381 619.934 324.286 633.829 341.942C648.012 359.598 667.117 368.426 691.143 368.426C707.063 368.426 723.128 363.216 739.338 352.796C755.838 342.087 769.877 327.181 781.455 308.078C793.323 288.685 800.849 266.687 804.033 242.085C786.666 234.27 774.219 224.429 766.693 212.562C759.456 200.405 755.838 186.801 755.838 171.75C755.838 157.567 759.89 145.845 767.995 136.583C776.1 127.031 786.231 122.255 798.389 122.255C813.152 122.255 824.73 128.913 833.125 142.227C841.519 155.252 845.716 173.342 845.716 196.497C845.716 234.125 838.48 268.424 824.006 299.394C809.823 330.075 789.994 354.388 764.522 372.334C739.338 389.99 710.971 398.818 679.419 398.818Z',
+  'M919.242 398.818C909.4 398.818 902.019 396.357 897.098 391.437C892.177 386.516 889.716 378.701 889.716 367.992C889.716 356.125 892.466 334.996 897.966 304.604C903.755 274.213 913.452 228.481 927.057 167.409L907.953 145.7C914.9 140.201 922.86 135.859 931.833 132.675C941.096 129.202 949.491 127.465 957.017 127.465C965.701 127.465 971.779 129.347 975.253 133.11C979.016 136.583 980.897 142.661 980.897 151.344C980.897 152.792 980.029 157.133 978.292 164.369C976.845 171.605 974.963 179.71 972.648 188.683C963.674 225.442 956.148 258.728 950.07 288.54C944.28 318.353 941.386 343.534 941.386 364.085C941.386 375.083 943.991 382.754 949.201 387.095C939.649 394.91 929.662 398.818 919.242 398.818ZM957.885 90.5615C948.622 90.5615 941.241 88.3907 935.741 84.0491C930.241 79.418 927.491 73.3397 927.491 65.8142C927.491 60.0254 929.083 54.6707 932.267 49.7502C935.741 44.8296 940.372 40.9222 946.162 38.0277C951.951 34.8439 958.609 33.252 966.135 33.252C975.687 33.252 983.068 35.5675 988.279 40.1986C993.779 44.5402 996.528 50.3291 996.528 57.5651C996.528 66.8273 992.91 74.6422 985.674 81.01C978.437 87.3777 969.174 90.5615 957.885 90.5615Z',
+  'M1160.37 298.526C1143.29 298.526 1127.8 296.21 1113.91 291.579C1100.3 286.948 1087.57 280.002 1075.7 270.74L1091.33 250.334C1097.99 255.254 1105.66 259.017 1114.34 261.622C1123.31 263.938 1132.58 265.095 1142.13 265.095C1160.95 265.095 1177.3 261.333 1191.19 253.807C1205.09 245.992 1215.65 235.428 1222.89 222.113C1230.42 208.799 1234.18 193.603 1234.18 176.526C1234.18 156.554 1228.97 140.201 1218.55 127.465C1208.42 114.441 1192.06 107.928 1169.48 107.928C1158.48 107.928 1147.2 110.533 1135.62 115.743C1124.33 120.664 1111.88 128.189 1098.28 138.32V120.085C1109.28 109.375 1118.97 100.837 1127.37 94.4691C1135.76 88.1013 1145.75 83.0361 1157.33 79.2733C1168.91 75.2211 1182.37 73.195 1197.71 73.195C1216.81 73.195 1233.31 77.6814 1247.21 86.6541C1261.1 95.6268 1271.52 107.494 1278.47 122.256C1285.7 137.017 1289.32 153.081 1289.32 170.448C1289.32 193.314 1284.55 214.443 1274.99 233.836C1265.44 253.228 1250.97 268.858 1231.57 280.725C1212.47 292.592 1188.73 298.526 1160.37 298.526ZM1071.36 398.818C1060.65 398.818 1052.83 396.068 1047.91 390.569C1042.99 385.069 1040.53 376.096 1040.53 363.65C1040.53 346.863 1042.84 321.392 1047.48 287.238C1052.11 253.084 1060.94 196.353 1073.96 117.046L1060.5 90.5616C1079.9 78.405 1097.12 72.3267 1112.17 72.3267C1124.91 72.3267 1131.28 79.9969 1131.28 95.3374C1131.28 97.9424 1129.97 107.349 1127.37 123.558C1124.76 139.477 1121.87 157.278 1118.68 176.96C1110.29 229.928 1104.07 269.292 1100.01 295.053C1096.25 320.813 1094.37 338.903 1094.37 349.323C1094.37 357.717 1095.24 365.098 1096.97 371.465C1098.71 377.833 1101.32 383.188 1104.79 387.53C1093.5 395.055 1082.36 398.818 1071.36 398.818Z',
+  'M1423.45 398.818C1392.77 398.818 1368.74 389.411 1351.37 370.597C1334.01 351.783 1325.32 325.878 1325.32 292.882C1325.32 261.622 1332.12 233.401 1345.73 208.22C1359.33 183.038 1378.15 163.356 1402.18 149.174C1426.2 134.702 1452.98 127.465 1482.5 127.465C1505.37 127.465 1523.17 132.965 1535.91 143.964C1548.93 154.962 1555.45 170.158 1555.45 189.551C1555.45 210.101 1548.06 227.757 1533.3 242.519C1518.54 256.991 1496.97 268.134 1468.61 275.949C1440.53 283.475 1406.52 287.238 1366.57 287.238L1371.78 262.925C1414.91 263.214 1448.34 256.846 1472.08 243.821C1496.11 230.507 1508.12 211.983 1508.12 188.248C1508.12 178.118 1505.08 170.013 1499 163.935C1492.92 157.857 1484.96 154.818 1475.12 154.818C1458.04 154.818 1442.12 161.186 1427.36 173.921C1412.6 186.367 1400.87 203.444 1392.19 225.152C1383.5 246.571 1379.16 270.016 1379.16 295.487C1379.16 318.642 1383.5 336.877 1392.19 350.191C1400.87 363.216 1412.74 369.729 1427.79 369.729C1446.61 369.729 1461.95 363.795 1473.82 351.928C1485.69 340.061 1492.2 324.286 1493.36 304.604C1504.65 304.604 1513.33 306.775 1519.41 311.117C1525.49 315.169 1528.53 321.681 1528.53 330.654C1528.53 342.232 1523.89 353.375 1514.63 364.085C1505.37 374.505 1492.63 382.898 1476.42 389.266C1460.5 395.634 1442.84 398.818 1423.45 398.818Z',
+  'M1628.97 398.818C1619.13 398.818 1611.75 395.779 1606.83 389.7C1601.91 383.911 1599.45 374.939 1599.45 362.782C1599.45 350.915 1603.35 324.865 1611.17 284.633C1619.27 244.111 1627.96 206.194 1637.22 170.882L1618.12 149.174C1625.93 142.806 1633.46 137.885 1640.69 134.412C1648.22 130.649 1655.02 128.768 1661.1 128.768C1669.21 128.768 1675.14 131.084 1678.9 135.715C1682.67 140.056 1684.55 145.7 1684.55 152.647C1684.55 161.62 1682.96 171.461 1679.77 182.17C1676.88 192.59 1672.54 204.891 1666.75 219.074L1671.09 221.245C1680.06 199.826 1689.18 182.17 1698.44 168.277C1708 154.384 1717.55 144.108 1727.1 137.451C1736.94 130.505 1746.78 127.031 1756.63 127.031C1766.18 127.031 1773.27 129.202 1777.9 133.544C1782.82 137.596 1785.28 143.964 1785.28 152.647C1785.28 162.199 1781.52 169.869 1773.99 175.658C1766.47 181.446 1756.63 184.341 1744.47 184.341C1729.13 184.341 1714.22 193.024 1699.75 210.391C1685.27 227.757 1673.55 250.334 1664.58 278.12C1655.6 305.907 1651.12 334.562 1651.12 364.085C1651.12 374.794 1652.85 382.32 1656.33 386.661C1647.64 394.766 1638.52 398.818 1628.97 398.818Z',
+]
+
+const WIDTH = 1786
+const HEIGHT = 444
+const GRID = 8
+const STAGGER = 0.85
+const JITTER = 0.25
+const FLIGHT = 1.15
+const FADE_START = 2.05
+const FADE_END = 2.8
+const LOOP = 4.8
+const ALPHA_LEVELS = 12
+
+type Particle = {
+  startX: number
+  startY: number
+  controlX: number
+  controlY: number
+  homeX: number
+  homeY: number
+  delay: number
+  phaseX: number
+  phaseY: number
+  phaseAlpha: number
+  cycleX: number
+  cycleY: number
+  cycleAlpha: number
+  depth: number
+}
+
+type Shapes = {
+  ring: Path2D
+  letters: Path2D[]
+}
+
+function createRandom(seed: number) {
+  let state = seed
+  return function random() {
+    state = (state + 0x6d2b79f5) | 0
+    let value = Math.imul(state ^ (state >>> 15), 1 | state)
+    value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function easeInOutCubic(value: number) {
+  return value < 0.5 ? 4 * value ** 3 : 1 - (-2 * value + 2) ** 3 / 2
+}
+
+function smoothstep(from: number, to: number, value: number) {
+  const progress = Math.min(Math.max((value - from) / (to - from), 0), 1)
+  return progress * progress * (3 - 2 * progress)
+}
+
+function isInsideLetters(
+  context: CanvasRenderingContext2D,
+  shapes: Shapes,
+  x: number,
+  y: number
+) {
+  if (x < 556 || y < 33 || y > 399) return false
+  return shapes.letters.some((letter) => {
+    return context.isPointInPath(letter, x, y, 'nonzero')
+  })
+}
+
+function createParticles(shapes: Shapes) {
+  const random = createRandom(1786)
+  const context = document.createElement('canvas').getContext('2d')
+  if (!context) throw new Error('Canvas 2D context is not available')
+  const particles: Particle[] = []
+  for (let y = GRID / 2; y < HEIGHT; y += GRID) {
+    for (let x = GRID / 2; x < WIDTH; x += GRID) {
+      const homeX = x + (random() - 0.5) * GRID * 0.9
+      const homeY = y + (random() - 0.5) * GRID * 0.9
+      const inside =
+        context.isPointInPath(shapes.ring, homeX, homeY, 'evenodd') ||
+        isInsideLetters(context, shapes, homeX, homeY)
+      if (!inside) continue
+      const startX = homeX * 0.35 + random() * WIDTH * 0.65 - WIDTH * 0.05
+      const startY = random() * HEIGHT * 1.3 - HEIGHT * 0.15
+      const bend = (random() - 0.5) * 0.8
+      const midX = (startX + homeX) / 2
+      const midY = (startY + homeY) / 2
+      particles.push({
+        startX,
+        startY,
+        controlX: midX - (homeY - startY) * bend,
+        controlY: midY + (homeX - startX) * bend,
+        homeX,
+        homeY,
+        delay: (homeX / WIDTH) * STAGGER + random() * JITTER,
+        phaseX: random() * Math.PI * 2,
+        phaseY: random() * Math.PI * 2,
+        phaseAlpha: random() * Math.PI * 2,
+        cycleX: 1 + Math.floor(random() * 2),
+        cycleY: 1 + Math.floor(random() * 2),
+        cycleAlpha: 2 + Math.floor(random() * 3),
+        depth: random(),
+      })
+    }
+  }
+  return particles
+}
+
+function drawSolid(
+  context: CanvasRenderingContext2D,
+  shapes: Shapes,
+  color: string,
+  alpha: number
+) {
+  context.globalAlpha = alpha
+  context.fillStyle = color
+  context.fill(shapes.ring, 'evenodd')
+  context.save()
+  context.beginPath()
+  context.rect(556, 33, 1230, 366)
+  context.clip()
+  for (const letter of shapes.letters) context.fill(letter, 'nonzero')
+  context.restore()
+}
+
+function drawFrame(
+  canvas: HTMLCanvasElement,
+  shapes: Shapes,
+  particles: Particle[],
+  color: string,
+  continuous: boolean,
+  time: number
+) {
+  const context = canvas.getContext('2d')
+  if (!context) return
+  context.setTransform(1, 0, 0, 1, 0, 0)
+  context.clearRect(0, 0, canvas.width, canvas.height)
+  if (canvas.width === 0 || canvas.height === 0) return
+  context.setTransform(canvas.width / WIDTH, 0, 0, canvas.height / HEIGHT, 0, 0)
+  const solidAlpha = continuous ? 0 : smoothstep(FADE_START, FADE_END, time)
+  if (solidAlpha >= 1) {
+    drawSolid(context, shapes, color, 1)
+    return
+  }
+  const unitsPerPixel = HEIGHT / canvas.height
+  const radius = Math.max(3.2, unitsPerPixel * 0.6)
+  const angle = ((time % LOOP) / LOOP) * Math.PI * 2
+  const breathing = continuous ? smoothstep(0.4, 2.4, time) : 0
+  const buckets: number[][] = Array.from({ length: ALPHA_LEVELS }, () => {
+    return []
+  })
+  for (const particle of particles) {
+    const progress = Math.min(Math.max((time - particle.delay) / FLIGHT, 0), 1)
+    const eased = easeInOutCubic(progress)
+    const wave = Math.sin(angle - (particle.homeX / WIDTH) * Math.PI * 2)
+    const drift = breathing * (1.6 + particle.depth * 1.8) * (1.1 + wave * 0.5)
+    const targetX =
+      particle.homeX +
+      Math.sin(angle * particle.cycleX + particle.phaseX) * drift
+    const targetY =
+      particle.homeY +
+      Math.cos(angle * particle.cycleY + particle.phaseY) * drift
+    const inverse = 1 - eased
+    const x =
+      inverse * inverse * particle.startX +
+      2 * inverse * eased * particle.controlX +
+      eased * eased * targetX
+    const y =
+      inverse * inverse * particle.startY +
+      2 * inverse * eased * particle.controlY +
+      eased * eased * targetY
+    const twinkle =
+      0.5 + 0.5 * Math.sin(angle * particle.cycleAlpha + particle.phaseAlpha)
+    const settled = smoothstep(0.6, 1, progress)
+    const glint = continuous ? 0.5 + 0.5 * wave : 1
+    const restingAlpha = continuous
+      ? 0.45 + 0.35 * twinkle * (0.6 + 0.4 * glint) + 0.2 * particle.depth
+      : 0.7 + 0.3 * twinkle
+    const flyingAlpha = 0.25 + 0.45 * twinkle
+    const alpha =
+      (flyingAlpha + (restingAlpha - flyingAlpha) * settled) *
+      (1 - solidAlpha) *
+      smoothstep(-0.25, 0.15, time - particle.delay * 0.3)
+    const level = Math.min(
+      ALPHA_LEVELS - 1,
+      Math.round(alpha * (ALPHA_LEVELS - 1))
+    )
+    if (level <= 0) continue
+    buckets[level].push(x, y)
+  }
+  context.fillStyle = color
+  for (let level = 1; level < ALPHA_LEVELS; level++) {
+    const points = buckets[level]
+    if (points.length === 0) continue
+    context.globalAlpha = level / (ALPHA_LEVELS - 1)
+    context.beginPath()
+    for (let index = 0; index < points.length; index += 2) {
+      context.moveTo(points[index] + radius, points[index + 1])
+      context.arc(points[index], points[index + 1], radius, 0, Math.PI * 2)
+    }
+    context.fill()
+  }
+  if (solidAlpha > 0) drawSolid(context, shapes, color, solidAlpha)
+  context.globalAlpha = 1
+}
+
+export function OiPerLogoTextParticles({
+  brandColor,
+  continuous,
+  style,
+  ...props
+}: ComponentProps<'canvas'> & {
+  brandColor?: string
+  continuous?: boolean
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const color = brandColor ?? 'white'
+  const isContinuous = continuous ?? false
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const shapes: Shapes = {
+      ring: new Path2D(RING_PATH),
+      letters: LETTER_PATHS.map((path) => {
+        return new Path2D(path)
+      }),
+    }
+    const particles = createParticles(shapes)
+    const startedAt = performance.now()
+    let frame = 0
+    let finished = false
+
+    function render() {
+      if (!canvas) return
+      const time = (performance.now() - startedAt) / 1000
+      drawFrame(canvas, shapes, particles, color, isContinuous, time)
+      if (!isContinuous && time >= FADE_END) {
+        finished = true
+        return
+      }
+      frame = requestAnimationFrame(render)
+    }
+
+    const observer = new ResizeObserver(() => {
+      canvas.width = Math.round(canvas.clientWidth * devicePixelRatio)
+      canvas.height = Math.round(canvas.clientHeight * devicePixelRatio)
+      if (finished) drawFrame(canvas, shapes, particles, color, false, FADE_END)
+    })
+    observer.observe(canvas)
+    frame = requestAnimationFrame(render)
+
+    return function () {
+      cancelAnimationFrame(frame)
+      observer.disconnect()
+    }
+  }, [color, isContinuous])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        width: `${WIDTH / HEIGHT}em`,
+        height: '1em',
+        display: 'block',
+        ...style,
+      }}
+      {...props}
+    />
+  )
+}

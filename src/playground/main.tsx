@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useEffect, useRef, useState } from 'react'
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { OiPerLogoDissolve } from '../animations/dissolve'
 import { OiPerLogoDraw } from '../animations/draw'
@@ -6,7 +6,19 @@ import { OiPerLogoMax } from '../animations/max'
 import { OiPerLogoPro } from '../animations/pro'
 import { OiPerLogoShine } from '../animations/shine'
 import { OiPerLogoStripes } from '../animations/stripes'
+import { OiPerLogoTextCascade } from '../animations/text-cascade'
+import { OiPerLogoTextMax } from '../animations/text-max'
+import { OiPerLogoTextPro } from '../animations/text-pro'
 import { OiPerLogoTrace } from '../animations/trace'
+import { OiPerLogoFlow } from '../canvas-animations/flow'
+import { OiPerLogoGlyphs } from '../canvas-animations/glyphs'
+import { OiPerLogoHalftone } from '../canvas-animations/halftone'
+import { OiPerLogoInk } from '../canvas-animations/ink'
+import { OiPerLogoParticles } from '../canvas-animations/particles'
+import { OiPerLogoPixels } from '../canvas-animations/pixels'
+import { OiPerLogoTextGlyphs } from '../canvas-animations/text-glyphs'
+import { OiPerLogoTextHalftone } from '../canvas-animations/text-halftone'
+import { OiPerLogoTextParticles } from '../canvas-animations/text-particles'
 import { OiPerLogo, OiPerLogoBackground, OiPerLogoCompact } from '../logo'
 import { OiPerLogoText, OiPerText } from '../text'
 
@@ -44,13 +56,17 @@ const WORDMARKS = [
   { name: 'OiPerLogoText', Logo: OiPerLogoText, file: 'logo-text/white' },
 ]
 
-const ANIMATED: Array<{
+type TAnimated = {
   name: string
-  Logo: (
-    props: ComponentProps<'svg'> & { brandColor?: string; continuous?: boolean }
-  ) => ReactNode
+  Logo: (props: {
+    style?: CSSProperties
+    brandColor?: string
+    continuous?: boolean
+  }) => ReactNode
   hasBrandColor: boolean
-}> = [
+}
+
+const ANIMATED: TAnimated[] = [
   { name: 'OiPerLogoMax', Logo: OiPerLogoMax, hasBrandColor: false },
   { name: 'OiPerLogoPro', Logo: OiPerLogoPro, hasBrandColor: false },
   { name: 'OiPerLogoDraw', Logo: OiPerLogoDraw, hasBrandColor: true },
@@ -58,6 +74,43 @@ const ANIMATED: Array<{
   { name: 'OiPerLogoTrace', Logo: OiPerLogoTrace, hasBrandColor: true },
   { name: 'OiPerLogoDissolve', Logo: OiPerLogoDissolve, hasBrandColor: true },
   { name: 'OiPerLogoStripes', Logo: OiPerLogoStripes, hasBrandColor: true },
+]
+
+const ANIMATED_WORDMARKS: TAnimated[] = [
+  { name: 'OiPerLogoTextMax', Logo: OiPerLogoTextMax, hasBrandColor: false },
+  { name: 'OiPerLogoTextPro', Logo: OiPerLogoTextPro, hasBrandColor: false },
+  {
+    name: 'OiPerLogoTextCascade',
+    Logo: OiPerLogoTextCascade,
+    hasBrandColor: true,
+  },
+]
+
+const CANVAS_ANIMATED: TAnimated[] = [
+  { name: 'OiPerLogoParticles', Logo: OiPerLogoParticles, hasBrandColor: true },
+  { name: 'OiPerLogoGlyphs', Logo: OiPerLogoGlyphs, hasBrandColor: true },
+  { name: 'OiPerLogoFlow', Logo: OiPerLogoFlow, hasBrandColor: true },
+  { name: 'OiPerLogoHalftone', Logo: OiPerLogoHalftone, hasBrandColor: true },
+  { name: 'OiPerLogoInk', Logo: OiPerLogoInk, hasBrandColor: true },
+  { name: 'OiPerLogoPixels', Logo: OiPerLogoPixels, hasBrandColor: true },
+]
+
+const CANVAS_ANIMATED_WORDMARKS: TAnimated[] = [
+  {
+    name: 'OiPerLogoTextParticles',
+    Logo: OiPerLogoTextParticles,
+    hasBrandColor: true,
+  },
+  {
+    name: 'OiPerLogoTextGlyphs',
+    Logo: OiPerLogoTextGlyphs,
+    hasBrandColor: true,
+  },
+  {
+    name: 'OiPerLogoTextHalftone',
+    Logo: OiPerLogoTextHalftone,
+    hasBrandColor: true,
+  },
 ]
 
 async function copyFile(url: string, format: (typeof FORMATS)[number]) {
@@ -174,15 +227,52 @@ function Downloads({
   )
 }
 
-function IconsHead({ continuous }: { continuous?: boolean }) {
+function AnimatedTable({
+  items,
+  isWordmark,
+}: {
+  items: TAnimated[]
+  isWordmark: boolean
+}) {
+  const sizes = isWordmark ? [24, 48] : ICON_SIZES
+  const previewSize = isWordmark ? 48 : 64
+
+  function sizeStyle(size: number): CSSProperties {
+    if (isWordmark) return { width: (size * 1786) / 444, height: size }
+    return { fontSize: size }
+  }
+
   return (
-    <div className="head">
-      <span>Component</span>
-      {ICON_SIZES.map((size) => (
-        <span key={size}>{size}px</span>
+    <div className={isWordmark ? 'grid animated-wordmarks' : 'grid animated'}>
+      <div className="head">
+        <span>Component</span>
+        {sizes.map((size) => (
+          <span key={size}>{size}px</span>
+        ))}
+        <span>Brand color</span>
+        <span>Continuous</span>
+      </div>
+      {items.map((item) => (
+        <div key={item.name}>
+          <code>{item.name}</code>
+          {sizes.map((size) => (
+            <span key={size}>
+              <item.Logo style={sizeStyle(size)} />
+            </span>
+          ))}
+          <span>
+            {item.hasBrandColor && (
+              <item.Logo
+                brandColor={BRAND_COLOR}
+                style={sizeStyle(previewSize)}
+              />
+            )}
+          </span>
+          <span>
+            <item.Logo continuous style={sizeStyle(previewSize)} />
+          </span>
+        </div>
       ))}
-      <span>Brand color</span>
-      {continuous && <span>Continuous</span>}
     </div>
   )
 }
@@ -203,7 +293,13 @@ function App() {
       <section>
         <h2>Icons</h2>
         <div className="grid icons">
-          <IconsHead />
+          <div className="head">
+            <span>Component</span>
+            {ICON_SIZES.map((size) => (
+              <span key={size}>{size}px</span>
+            ))}
+            <span>Brand color</span>
+          </div>
           {ICONS.map((icon) => (
             <div key={icon.name}>
               <div className="name">
@@ -250,30 +346,14 @@ function App() {
 
       <section>
         <h2>Animated</h2>
-        <div className="grid animated">
-          <IconsHead continuous />
-          {ANIMATED.map((icon) => (
-            <div key={icon.name}>
-              <code>{icon.name}</code>
-              {ICON_SIZES.map((size) => (
-                <span key={size}>
-                  <icon.Logo style={{ fontSize: size }} />
-                </span>
-              ))}
-              <span>
-                {icon.hasBrandColor && (
-                  <icon.Logo
-                    brandColor={BRAND_COLOR}
-                    style={{ fontSize: 64 }}
-                  />
-                )}
-              </span>
-              <span>
-                <icon.Logo continuous style={{ fontSize: 64 }} />
-              </span>
-            </div>
-          ))}
-        </div>
+        <AnimatedTable items={ANIMATED} isWordmark={false} />
+        <AnimatedTable items={ANIMATED_WORDMARKS} isWordmark />
+      </section>
+
+      <section>
+        <h2>Canvas Animation</h2>
+        <AnimatedTable items={CANVAS_ANIMATED} isWordmark={false} />
+        <AnimatedTable items={CANVAS_ANIMATED_WORDMARKS} isWordmark />
       </section>
     </div>
   )
