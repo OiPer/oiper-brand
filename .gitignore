@@ -2,3 +2,4 @@ dist
 node_modules
 dist-playground
 src/playground/public
+.tanstack

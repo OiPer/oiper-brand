@@ -1,6 +1,6 @@
 [build]
   command = "pnpm build:playground"
-  publish = "dist-playground"
+  publish = "dist-playground/client"
 
 [[headers]]
   for = "/assets/*"
