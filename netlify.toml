@@ -2,6 +2,9 @@
   command = "pnpm build:playground"
   publish = "dist-playground/client"
 
+[build.environment]
+  NODE_VERSION = "24"
+
 [[headers]]
   for = "/assets/*"
   [headers.values]
