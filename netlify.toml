@@ -1,6 +1,6 @@
 [build]
-  command = "pnpm build:playground"
-  publish = "dist-playground/client"
+  command = "pnpm --filter web build"
+  publish = "apps/web/dist/client"
 
 [build.environment]
   NODE_VERSION = "24"

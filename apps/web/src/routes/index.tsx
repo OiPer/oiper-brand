@@ -5,28 +5,30 @@ import {
   Tick02Icon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import {
+  OiPerLogoDissolve,
+  OiPerLogoDraw,
+  OiPerLogoFlow,
+  OiPerLogoGlyphs,
+  OiPerLogoHalftone,
+  OiPerLogoInk,
+  OiPerLogoMax,
+  OiPerLogoParticles,
+  OiPerLogoPixels,
+  OiPerLogoPro,
+  OiPerLogoShine,
+  OiPerLogoStripes,
+  OiPerLogoTextCascade,
+  OiPerLogoTextGlyphs,
+  OiPerLogoTextHalftone,
+  OiPerLogoTextMax,
+  OiPerLogoTextParticles,
+  OiPerLogoTextPro,
+  OiPerLogoTrace,
+} from '@oiper/brand'
 import { createFileRoute } from '@tanstack/react-router'
 import clsx from 'clsx'
 import { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react'
-import { OiPerLogoDissolve } from '../../animations/dissolve'
-import { OiPerLogoDraw } from '../../animations/draw'
-import { OiPerLogoMax } from '../../animations/max'
-import { OiPerLogoPro } from '../../animations/pro'
-import { OiPerLogoShine } from '../../animations/shine'
-import { OiPerLogoStripes } from '../../animations/stripes'
-import { OiPerLogoTextCascade } from '../../animations/text-cascade'
-import { OiPerLogoTextMax } from '../../animations/text-max'
-import { OiPerLogoTextPro } from '../../animations/text-pro'
-import { OiPerLogoTrace } from '../../animations/trace'
-import { OiPerLogoFlow } from '../../canvas-animations/flow'
-import { OiPerLogoGlyphs } from '../../canvas-animations/glyphs'
-import { OiPerLogoHalftone } from '../../canvas-animations/halftone'
-import { OiPerLogoInk } from '../../canvas-animations/ink'
-import { OiPerLogoParticles } from '../../canvas-animations/particles'
-import { OiPerLogoPixels } from '../../canvas-animations/pixels'
-import { OiPerLogoTextGlyphs } from '../../canvas-animations/text-glyphs'
-import { OiPerLogoTextHalftone } from '../../canvas-animations/text-halftone'
-import { OiPerLogoTextParticles } from '../../canvas-animations/text-particles'
 
 export const Route = createFileRoute('/')({
   component: Home,
