@@ -25,9 +25,9 @@ jobs:
 
       - name: Set the version
         working-directory: apps/logo
-        run: >
-          npm version --no-git-tag-version
-          "$(node -p "require('./package.json').version")-$(date -u +%Y%m%d%H%M%S)"
+        run: |
+          npm version --no-git-tag-version --allow-same-version "$(npm view @oiper/brand versions --json | node -p "JSON.parse(require('fs').readFileSync(0)).filter((v) => !v.includes('-')).at(-1)")"
+          npm version --no-git-tag-version patch
 
       - run: pnpm --filter @oiper/brand build
 
