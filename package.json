@@ -1,6 +1,7 @@
 {
   "name": "@oiper/brand",
   "version": "0.0.0",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OiPer/oiper-brand.git"
@@ -14,7 +15,7 @@
     "typecheck:watch": "tsc --noEmit --watch",
     "build": "tsdown --config ./tsdown.config.ts",
     "build:watch": "concurrently --names \"R,T\" --prefix-colors \"blue.dim,magenta.dim\" \"tsdown --config ./tsdown.config.ts --watch\" \"tsc --noEmit --watch\"",
-    "dev": "vite --host --port 3000",
+    "dev": "vite dev --host --port 3000",
     "build:playground": "pnpm logos && vite build",
     "logos": "tsx ./src/scripts/write-logos.tsx"
   },
@@ -38,12 +39,18 @@
     "@eslint/compat": "^1.4.1",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
+    "@hugeicons/core-free-icons": "^4.3.5",
+    "@hugeicons/react": "^1.1.10",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-router": "^1.170.44",
+    "@tanstack/react-start": "^1.169.1",
     "@types/node": "^25.9.4",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.62.0",
     "@typescript-eslint/parser": "^8.62.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "clsx": "^2.1.1",
     "concurrently": "^10.0.3",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -58,6 +65,7 @@
     "react-dom": "^19.2.7",
     "sharp": "^0.35.5",
     "sharp-ico": "^0.1.5",
+    "tailwindcss": "^4.3.3",
     "tsdown": "^0.22.3",
     "tslib": "^2.8.1",
     "tsx": "^4.22.4",

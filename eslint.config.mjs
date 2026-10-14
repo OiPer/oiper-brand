@@ -19,7 +19,12 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['./*.{js,mjs,ts,mts}', '**/node_modules', '**/dist'],
+    ignores: [
+      './*.{js,mjs,ts,mts}',
+      '**/node_modules',
+      '**/dist',
+      '**/dist-playground',
+    ],
   },
 
   ...configs.recommended,
@@ -107,6 +112,13 @@ export default [
         { '**/*.*': 'KEBAB_CASE' },
         { ignoreMiddleExtensions: true },
       ],
+    },
+  },
+
+  {
+    files: ['src/playground/routes/__root.tsx'],
+    rules: {
+      'check-file/filename-naming-convention': 0,
     },
   },
 
