@@ -4,15 +4,9 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  publicDir: './src/playground/public',
-  build: {
-    outDir: './dist-playground',
-  },
+  resolve: { tsconfigPaths: true },
   plugins: [
-    tanstackStart({
-      srcDirectory: './src/playground',
-      prerender: { enabled: true, crawlLinks: false },
-    }),
+    tanstackStart({ prerender: { enabled: true, crawlLinks: false } }),
     react(),
     tailwindcss(),
   ],

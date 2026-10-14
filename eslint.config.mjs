@@ -21,9 +21,9 @@ export default [
   {
     ignores: [
       './*.{js,mjs,ts,mts}',
+      'apps/*/*.{js,mjs,ts,mts}',
       '**/node_modules',
       '**/dist',
-      '**/dist-playground',
     ],
   },
 
@@ -116,7 +116,7 @@ export default [
   },
 
   {
-    files: ['src/playground/routes/__root.tsx'],
+    files: ['apps/web/src/routes/__root.tsx'],
     rules: {
       'check-file/filename-naming-convention': 0,
     },

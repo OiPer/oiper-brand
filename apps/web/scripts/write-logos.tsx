@@ -1,3 +1,10 @@
+import {
+  OiPerLogo,
+  OiPerLogoBackground,
+  OiPerLogoCompact,
+  OiPerLogoText,
+  OiPerText,
+} from '@oiper/brand'
 import { zipSync } from 'fflate'
 import fs from 'fs'
 import path from 'path'
@@ -6,12 +13,10 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import sharp from 'sharp'
 import ico from 'sharp-ico'
 import { fileURLToPath } from 'url'
-import { OiPerLogo, OiPerLogoBackground, OiPerLogoCompact } from '../logo'
-import { OiPerLogoText, OiPerText } from '../text'
 
 const PUBLIC_DIR = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
-  '../playground/public'
+  '../public'
 )
 
 const ICON_SIZES = [16, 32, 48, 64, 128, 256, 512, 1024]
