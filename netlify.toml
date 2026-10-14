@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "24"
 
+[[redirects]]
+  from = "https://oiper-brand.netlify.app/*"
+  to = "https://brand.oiper.com/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/assets/*"
   [headers.values]
