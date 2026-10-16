@@ -137,6 +137,77 @@ void (async () => {
   await writeFavicon('favicon-white.ico', '#FFFFFF')
   await writeFavicon('favicon-black.ico', '#000000')
 
+  const SITE = 'https://brand.oiper.com'
+  const colorNames = COLORS.map((color) => color.name)
+  const iconSizes = ICON_SIZES.join(', ')
+  const wordmarkHeights = WORDMARK_HEIGHTS.join(', ')
+  const svgFiles = [
+    ...colorNames.flatMap((color) => [
+        `logo/${color}.svg`,
+        `logo-compact/${color}.svg`,
+        `text/${color}.svg`,
+        `logo-text/${color}.svg`,
+      ]),
+    'logo-background/dark.svg',
+    'logo-background/light.svg',
+  ]
+
+  const llmsTxt = `# OiPer Brand
+
+> Logo and brand assets for OiPer. Every file below is hosted at ${SITE} and hotlinkable (CORS: Access-Control-Allow-Origin: *). Animated logos ship as React components in the npm package \`@oiper/brand\` (source: https://github.com/OiPer/oiper-brand).
+
+## Main logos
+
+The primary pair, one white and one black:
+
+- ${SITE}/logo/white.svg
+- ${SITE}/logo/black.svg
+
+Raster versions of the same two: ${SITE}/logo/white-{size}.{format} and ${SITE}/logo/black-{size}.{format}.
+
+## Static logo URL scheme
+
+Available colors: white, black, ${colorNames.filter((color) => color !== 'white' && color !== 'black').join(', ')} (white and black are the defaults; the rest are optional variants).
+Raster formats: png, webp, avif.
+
+### OiPerLogo (square icon)
+- SVG: ${SITE}/logo/{color}.svg
+- Raster, sizes ${iconSizes}: ${SITE}/logo/{color}-{size}.{format}
+- Example: ${SITE}/logo/white-512.png
+
+### OiPerLogoCompact (square icon)
+- SVG: ${SITE}/logo-compact/{color}.svg
+- Raster, sizes ${iconSizes}: ${SITE}/logo-compact/{color}-{size}.{format}
+
+### OiPerLogoBackground (logo on filled background, only dark and light)
+- SVG: ${SITE}/logo-background/{dark|light}.svg
+- Raster, sizes ${iconSizes}: ${SITE}/logo-background/{dark|light}-{size}.{format}
+
+### OiPerText (wordmark)
+- SVG: ${SITE}/text/{color}.svg
+- Raster, heights ${wordmarkHeights}: ${SITE}/text/{color}-h{height}.{format}
+- Example: ${SITE}/text/black-h128.webp
+
+### OiPerLogoText (icon + wordmark)
+- SVG: ${SITE}/logo-text/{color}.svg
+- Raster, heights ${wordmarkHeights}: ${SITE}/logo-text/{color}-h{height}.{format}
+
+## All SVG files
+
+${svgFiles.map((file) => `- ${SITE}/${file}`).join('\n')}
+
+## Other
+
+- Favicons: ${SITE}/favicon.ico, ${SITE}/favicon-white.ico, ${SITE}/favicon-black.ico
+- Brand kit, one zip of every SVG/PNG/ICO: ${SITE}/oiper-brand-kit.zip
+
+## Animated logos
+
+No hosted files. OiPerLogoMax, OiPerLogoPro, OiPerLogoDraw, OiPerLogoShine, OiPerLogoTrace, OiPerLogoDissolve, OiPerLogoStripes, OiPerLogoParticles, OiPerLogoGlyphs, OiPerLogoFlow, OiPerLogoHalftone, OiPerLogoInk, OiPerLogoPixels and the wordmark variants are React components in \`@oiper/brand\`.
+`
+
+  fs.writeFileSync(path.join(PUBLIC_DIR, 'llms.txt'), llmsTxt)
+
   const brandKit: Record<string, Uint8Array> = {}
   for (const entry of fs.readdirSync(PUBLIC_DIR, { recursive: true })) {
     const filePath = path.join(PUBLIC_DIR, entry.toString())
