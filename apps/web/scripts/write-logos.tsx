@@ -33,6 +33,7 @@ const COLORS = [
   { name: 'green', fillColor: '#00FF00' },
   { name: 'yellow', fillColor: '#FFFF00' },
   { name: 'purple', fillColor: '#FF00FF' },
+  { name: 'indigo', fillColor: '#6366f1' },
 ]
 
 async function writeLogo(
