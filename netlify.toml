@@ -47,6 +47,12 @@
     Access-Control-Allow-Origin = "*"
 
 [[headers]]
+  for = "/animated/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
   for = "/favicon*.ico"
   [headers.values]
     Cache-Control = "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800"

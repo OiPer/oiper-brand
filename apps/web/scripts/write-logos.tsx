@@ -18,6 +18,7 @@ const PUBLIC_DIR = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
   '../public'
 )
+const ANIMATED_DIR = path.join(PUBLIC_DIR, '../animated')
 
 const ICON_SIZES = [16, 32, 48, 64, 128, 256, 512, 1024]
 const WORDMARK_HEIGHTS = [32, 64, 128, 256, 512]
@@ -73,6 +74,9 @@ async function writeFavicon(fileName: string, fillColor: string) {
 void (async () => {
   fs.rmSync(PUBLIC_DIR, { recursive: true, force: true })
   fs.mkdirSync(PUBLIC_DIR, { recursive: true })
+  fs.cpSync(ANIMATED_DIR, path.join(PUBLIC_DIR, 'animated'), {
+    recursive: true,
+  })
 
   const iconResizes = ICON_SIZES.map((size) => ({
     suffix: `${size}`,
@@ -204,7 +208,14 @@ ${svgFiles.map((file) => `- ${SITE}/${file}`).join('\n')}
 
 ## Animated logos
 
-No hosted files. OiPerLogoMax, OiPerLogoPro, OiPerLogoDraw, OiPerLogoShine, OiPerLogoTrace, OiPerLogoDissolve, OiPerLogoStripes, OiPerLogoParticles, OiPerLogoGlyphs, OiPerLogoFlow, OiPerLogoHalftone, OiPerLogoInk, OiPerLogoPixels and the wordmark variants are React components in \`@oiper/brand\`.
+Looping GIFs, white on #0f1012 (icons 512x512, wordmarks 640x240):
+
+${fs
+  .readdirSync(ANIMATED_DIR)
+  .map((file) => `- ${SITE}/animated/${file}`)
+  .join('\n')}
+
+OiPerLogoMax, OiPerLogoPro, OiPerLogoDraw, OiPerLogoShine, OiPerLogoTrace, OiPerLogoDissolve, OiPerLogoStripes, OiPerLogoParticles, OiPerLogoGlyphs, OiPerLogoFlow, OiPerLogoHalftone, OiPerLogoInk, OiPerLogoPixels and the wordmark variants are React components in \`@oiper/brand\`.
 `
 
   fs.writeFileSync(path.join(PUBLIC_DIR, 'llms.txt'), llmsTxt)
