@@ -77,6 +77,9 @@ void (async () => {
   fs.cpSync(ANIMATED_DIR, path.join(PUBLIC_DIR, 'animated'), {
     recursive: true,
   })
+  fs.cpSync(path.join(PUBLIC_DIR, '../bimi'), path.join(PUBLIC_DIR, 'bimi'), {
+    recursive: true,
+  })
 
   const iconResizes = ICON_SIZES.map((size) => ({
     suffix: `${size}`,
